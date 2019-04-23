@@ -19,15 +19,15 @@ public class WordDAO {
         try {
             conn = JDBCConnection.getInstance().getConnection();
 
-            //Get number of words-rows on table
+            //Get max number of idWord (previously getting number of rows, but its not compatible if there are gaps in id)
             stmt = conn.createStatement();
             String sql;
-            sql = "SELECT count(idWord) FROM " + TABLE;
+            sql = "SELECT max(idWord) FROM " + TABLE;
             rs = stmt.executeQuery(sql);
             rs.next();
-            int numberOfWords = rs.getInt("count(idWord)");
+            int numberOfWords = rs.getInt("max(idWord)");
 
-            //Get a random word from table, using random with top as number of rows
+            //Get a random word from table, using random with top as max id (previously number of rows)
             //Inside of a loop in case there are gaps in idWord from removing words from database
             while (Objects.isNull(word)){
                 sql = "SELECT word FROM " + TABLE +
