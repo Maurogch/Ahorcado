@@ -9,7 +9,7 @@ public class Word {
     private String playedWord;
     private boolean win;
     private boolean playing = false;
-    private boolean gameEnded = false;
+    private volatile boolean gameEnded = false;
     private List<Character> correctChars = new ArrayList<>();
     private Set<Character> playedChars = new HashSet<>();
 
@@ -28,6 +28,7 @@ public class Word {
 
         if(gameEnded) return false; //This was necessary as both players would win otherwise, ask why
         //Why was the other thread entering if the game ended was true after the noftify
+        //-It was not checking the condition on the while as it already entered, solution?
 
         playing = true;
 
@@ -60,5 +61,9 @@ public class Word {
 
     public boolean gameEnded() {
         return gameEnded;
+    }
+
+    public void setGameEnded(boolean gameEnded) {
+        this.gameEnded = gameEnded;
     }
 }

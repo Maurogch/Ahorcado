@@ -22,8 +22,9 @@ public class Player extends Thread{
         while (lives > 0 && !word.gameEnded()){
             try {
                 char playedChar = getChar();
-                System.out.println(playerName + " guessed with character: " + playedChar);
                 win = word.play(playedChar);
+                if(word.gameEnded()) break;
+                System.out.println(playerName + " guessed with character: " + playedChar);
                 if(!win) lives--;
             } catch (NullPointerException e) {
                 System.out.println("Error: No more letters to play");
@@ -32,7 +33,8 @@ public class Player extends Thread{
         }
 
         if(lives == 0){
-            System.out.println("\n" + playerName + " has lost the game, correct word was " + word.getPlayedWord());
+            word.setGameEnded(true);
+            System.out.println("\n" + playerName + " has lost the game, correct word was -" + word.getPlayedWord() + "-");
         }
 
         if(win){
