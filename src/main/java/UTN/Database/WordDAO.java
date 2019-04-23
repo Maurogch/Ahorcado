@@ -28,7 +28,7 @@ public class WordDAO {
             int numberOfWords = rs.getInt("count(idWord)");
 
             //Get a random word from table, using random with top as number of rows
-            //Iside of a loop in case there are gaps in idWord from removing words from database
+            //Inside of a loop in case there are gaps in idWord from removing words from database
             while (Objects.isNull(word)){
                 sql = "SELECT word FROM " + TABLE +
                         " WHERE idWord = ?";
