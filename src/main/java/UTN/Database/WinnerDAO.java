@@ -24,8 +24,6 @@ public class WinnerDAO {
                     "VALUES (?, ?, ?)";
             pStmt = conn.prepareStatement(sql);
 
-            DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
-
             pStmt.setString(1,winner.getName());
             pStmt.setObject(2, winner.getDate());
             pStmt.setString(3,winner.getWord());
