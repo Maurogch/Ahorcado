@@ -28,7 +28,7 @@ public class Player extends Thread{
                 if(!win) lives--;
             } catch (NullPointerException e) {
                 System.out.println("Error: No more letters to play");
-                System.exit(0);
+                System.exit(1);
             }
         }
 
