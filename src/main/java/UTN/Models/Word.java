@@ -26,9 +26,7 @@ public class Word {
             }
         }
 
-        if(gameEnded) return false; //This was necessary as both players would win otherwise, ask why
-        //Why was the other thread entering if the game ended was true after the noftify
-        //-It was not checking the condition on the while as it already entered, solution?
+        if(gameEnded) return false;
 
         playing = true;
 
