@@ -28,7 +28,7 @@ public class App
         p1.start();
         p2.start();
 
-        //Waits for thread to die
+        //Waits for thread to die, could have used interrupt()
         try {
             p1.join();
             p2.join();
