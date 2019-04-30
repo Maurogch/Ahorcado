@@ -21,6 +21,7 @@ public class Word {
         while (playing){
             try {
                 wait();
+                Thread.sleep(10);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
