@@ -6,6 +6,8 @@ import UTN.Models.Player;
 import UTN.Models.Winner;
 import UTN.Models.Word;
 
+import static java.lang.Thread.sleep;
+
 public class App 
 {
     public static void main( String[] args )
@@ -34,11 +36,12 @@ public class App
                 "        \\/     \\/                   \\/     \\/      \\/       "
         );
 
-        p1.start();
-        p2.start();
-
-        //Waits for thread to die, could have used interrupt()
         try {
+            p1.start();
+            sleep(10);
+            p2.start();
+
+            //Waits for thread to die, could have used interrupt()
             p1.join();
             p2.join();
         } catch (InterruptedException e) {
