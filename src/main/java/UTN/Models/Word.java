@@ -79,4 +79,8 @@ public class Word {
     public void setGameEnded(boolean gameEnded) {
         this.gameEnded = gameEnded;
     }
+
+    public List<Character> getCorrectChars() {
+        return correctChars;
+    }
 }
