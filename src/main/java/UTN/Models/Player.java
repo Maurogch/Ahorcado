@@ -2,6 +2,7 @@ package UTN.Models;
 
 import java.util.Random;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class Player extends Thread{
     private String playerName;
@@ -22,18 +23,27 @@ public class Player extends Thread{
         while (lives > 0 && !word.gameEnded()){
             try {
                 char playedChar = getChar();
+                sleep(10);
                 win = word.play(playedChar);
-                if(word.gameEnded()) break;
-                System.out.println(playerName + " guessed with character: " + playedChar);
-                if(!win) lives--;
+                if(word.gameEnded() || win) break;
+                synchronized (this) {
+                    String letters = word.getCorrectChars().stream()
+                            .map( n -> n.toString() )
+                            .collect( Collectors.joining( "," ) );
+                    System.out.println(playerName + " guessed with character: " + playedChar
+                    + "\n Guessed letters: " + letters + "\n");
+                }
+                lives--;
             } catch (NullPointerException e) {
                 System.out.println("Error: No more letters to play");
                 System.exit(1);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
         }
 
         if(lives == 0){
-            word.setGameEnded(true);
+            word.setGameEnded(true); //if a player dies, the other wins, stop playing
             System.out.println("\n" + playerName + " has lost the game, correct word was -" + word.getPlayedWord() + "-");
         }
 
