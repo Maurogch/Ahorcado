@@ -9,6 +9,7 @@ public class Player extends Thread{
     private Word word;
     private int lives;
     private Boolean win;
+    private char playedChar;
 
 
     public Player(Word word, int lives, String name) {
@@ -22,17 +23,11 @@ public class Player extends Thread{
     public void run(){
         while (lives > 0 && !word.gameEnded()){
             try {
-                char playedChar = getChar();
+                playedChar = getChar();
                 sleep(10);
                 win = word.play(playedChar);
                 if(word.gameEnded() || win) break;
-                synchronized (this) {
-                    String letters = word.getCorrectChars().stream()
-                            .map( n -> n.toString() )
-                            .collect( Collectors.joining( "," ) );
-                    System.out.println(playerName + " guessed with character: " + playedChar
-                    + "\n Guessed letters: " + letters + "\n");
-                }
+                showGuessedChar();
                 lives--;
             } catch (NullPointerException e) {
                 System.out.println("Error: No more letters to play");
@@ -48,9 +43,18 @@ public class Player extends Thread{
         }
 
         if(win){
+            showGuessedChar();
             System.out.println("\n" + playerName + " has won the game, correct word was -" + word.getPlayedWord() + "-");
             System.out.println("Total number of tries : " + word.getPlayedChars().size());
         }
+    }
+
+    private synchronized void showGuessedChar(){
+        String letters = word.getCorrectChars().stream()
+                .map( n -> n.toString() )
+                .collect( Collectors.joining( "," ) );
+        System.out.println(playerName + " guessed with character: " + playedChar
+                + "\n Guessed letters: " + letters + "\n");
     }
 
     //Gets list of played chars from word, then returns a char not yet played
